@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: BadgeOS Boilerplate Add-On
- * Plugin URI: http://www.learningtimes.com/
- * Description: This BadgeOS add-on automatically...
- * Author: Credly
+ * Plugin Name: BadgeOS D2SI Add-On
+ * Plugin URI: http://www.d2-si.fr/
+ * Description: This BadgeOS add-on enable some D2SI specific features
+ * Author: D2SI
  * Version: 1.0.0
- * Author URI: https://credly.com/
+ * Author URI: https://www.d2-si.fr/
  * License: GNU AGPLv3
  * License URI: http://www.gnu.org/licenses/agpl-3.0.html
  */
@@ -20,7 +20,7 @@
  *
  * @since 1.0.0
  */
-class BadgeOS_Addon {
+class BadgeOS_D2si {
 
 	/**
 	 * Get everything running.
@@ -35,7 +35,7 @@ class BadgeOS_Addon {
 		$this->directory_url  = plugins_url( dirname( $this->basename ) );
 
 		// Load translations
-		load_plugin_textdomain( 'badgeos-addon', false, dirname( $this->basename ) . '/languages' );
+		load_plugin_textdomain( 'badgeos-d2si', false, dirname( $this->basename ) . '/languages' );
 
 		// Run our activation and deactivation hooks
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
@@ -46,6 +46,7 @@ class BadgeOS_Addon {
 
 		// Include our other plugin files
 		add_action( 'init', array( $this, 'includes' ) );
+        add_action( 'init', 'badgeos_d2si_add_tags_init' );
 
 	} /* __construct() */
 
@@ -58,10 +59,8 @@ class BadgeOS_Addon {
 	public function includes() {
 
 		// If BadgeOS is available...
-		if ( $this->meets_requirements() ) {
-
-			// Include some files
-
+        if ( $this->meets_requirements() ) {
+            require_once( $this->directory_path . '/includes/tags.php' );
 		}
 
 	} /* includes() */
@@ -75,9 +74,7 @@ class BadgeOS_Addon {
 
 		// If BadgeOS is available, run our activation functions
 		if ( $this->meets_requirements() ) {
-
 			// Do some activation things
-
 		}
 
 	} /* activate() */
@@ -136,4 +133,4 @@ class BadgeOS_Addon {
 } /* BadgeOS_Addon */
 
 // Instantiate our class to a global variable that we can access elsewhere
-$GLOBALS['badgeos_addon'] = new BadgeOS_Addon();
+$GLOBALS['badgeos_d2si'] = new BadgeOS_D2si();
